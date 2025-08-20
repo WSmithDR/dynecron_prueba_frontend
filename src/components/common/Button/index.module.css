@@ -1,0 +1,129 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Button sizes */
+.button--sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.button--md {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.button--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Button variants */
+.button--primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.button--secondary {
+  background-color: #4b5563;
+  color: white;
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: #374151;
+}
+
+.button--danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.button--outline {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #1f2937;
+}
+
+.button--outline:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* Disabled state */
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading state */
+.button--loading .content {
+  visibility: hidden;
+}
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.button--outline .spinner,
+.button--secondary .spinner {
+  border-top-color: #1f2937;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Icons */
+.leftIcon {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.rightIcon {
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Full width */
+.button--full-width {
+  width: 100%;
+}

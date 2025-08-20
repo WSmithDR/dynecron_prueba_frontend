@@ -1,0 +1,214 @@
+.uploadPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.uploadPage h1 {
+  color: #1e40af;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #4b5563;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.uploadCard {
+  margin-bottom: 2rem;
+  border: 2px dashed #d1d5db;
+  background-color: #f9fafb;
+  transition: all 0.2s ease-in-out;
+}
+
+.uploadCard:hover {
+  border-color: #93c5fd;
+  background-color: #f0f9ff;
+}
+
+.dropzone {
+  padding: 3rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.dropzone.active {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+.uploadIcon {
+  color: #93c5fd;
+  margin-bottom: 1rem;
+}
+
+.dropzone h3 {
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.dropzone p {
+  color: #6b7280;
+  margin: 0.5rem 0;
+}
+
+.fileTypes {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-top: 1rem;
+}
+
+.fileLists {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.fileListContainer {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.fileListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.fileListHeader h3 {
+  color: #1e40af;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.fileList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.fileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.fileItem:last-child {
+  border-bottom: none;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.fileIcon {
+  color: #6b7280;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.uploadedIcon {
+  color: #10b981;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.fileDetails {
+  min-width: 0;
+}
+
+.fileName {
+  display: block;
+  color: #111827;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileSize {
+  display: block;
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
+}
+
+.removeButton:hover {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.removeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.uploadActions {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.uploadedFile {
+  padding: 0.5rem 0;
+}
+
+.uploadedFile .fileInfo {
+  opacity: 0.8;
+}
+
+/* Scrollbar styles */
+.fileList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fileList::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.fileList::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 3px;
+}
+
+.fileList::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+@media (min-width: 768px) {
+  .fileLists {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .uploadPage {
+    padding: 0;
+  }
+}

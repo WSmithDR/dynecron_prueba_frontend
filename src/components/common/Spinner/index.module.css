@@ -1,0 +1,103 @@
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 60px;
+}
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.spinner div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+  border: 4px solid;
+  border-radius: 50%;
+  animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+
+.spinner div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.spinner div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.spinner div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sizes */
+.spinner--sm {
+  width: 20px;
+  height: 20px;
+}
+
+.spinner--sm div {
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+  border-width: 2px;
+}
+
+.spinner--md {
+  width: 40px;
+  height: 40px;
+}
+
+.spinner--md div {
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+  border-width: 3px;
+}
+
+.spinner--lg {
+  width: 60px;
+  height: 60px;
+}
+
+.spinner--lg div {
+  width: 48px;
+  height: 48px;
+  margin: 6px;
+  border-width: 4px;
+}
+
+/* Variants */
+.spinner--primary {
+  color: #2563eb;
+}
+
+.spinner--secondary {
+  color: #4b5563;
+}
+
+.spinner--light {
+  color: #f3f4f6;
+}
+
+.spinner--dark {
+  color: #1f2937;
+}

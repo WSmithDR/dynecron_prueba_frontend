@@ -1,0 +1,70 @@
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Card variants */
+.card--default {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.card--outlined {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.card--elevated {
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Hover effect */
+.card--hoverable:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Card header */
+.cardHeader {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Card body */
+.cardBody {
+  padding: 1.25rem;
+}
+
+/* Card footer */
+.cardFooter {
+  padding: 0.75rem 1.25rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Card with no padding */
+.card--no-padding .cardBody {
+  padding: 0;
+}
+
+/* Card with no header */
+.card--no-header .cardHeader {
+  display: none;
+}
+
+/* Card with no footer */
+.card--no-footer .cardFooter {
+  display: none;
+}
