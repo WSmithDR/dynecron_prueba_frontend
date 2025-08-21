@@ -1,11 +1,14 @@
 import React from 'react';
-import { FaRegSadTear } from 'react-icons/fa';
-import Card from '../common/Card';
 import type { SearchResult } from '../../store/search/search.types';
+import { Typography, Empty, List } from 'antd';
+import { SearchResultCard } from '../SearchResultCard';
+import styles from './index.module.css';
+
+const { Text } = Typography;
 
 interface SearchResultsProps {
   results: SearchResult[];
-  loading: string | null;
+  loading: string;
   error: string | null;
   hasSearched: boolean;
   totalResults: number;
@@ -24,7 +27,7 @@ const highlightTerm = (text: string, term: string) => {
   );
 };
 
-const SearchResults: React.FC<SearchResultsProps> = ({
+export const SearchResults: React.FC<SearchResultsProps> = ({
   results,
   loading,
   error,
@@ -37,29 +40,29 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 }) => {
   if (loading === 'pending') {
     return (
-      <div className="loading-container">
-        <div className="spinner-container">
-          <div className="spinner"></div>
-        </div>
-        <p>Buscando en los documentos...</p>
+      <div className={styles.loadingContainer}>
+        <div className={styles.loadingSpinner} />
+        <p>Buscando documentos...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="error-container">
-        <p className="error-text">{error}</p>
+      <div className={styles.errorContainer}>
+        <Text type="danger">Error al buscar documentos: {error}</Text>
       </div>
     );
   }
 
   if (hasSearched && (!results || results.length === 0)) {
     return (
-      <div className="no-results">
-        <FaRegSadTear className="no-results-icon" />
-        <h3>No se encontraron resultados</h3>
-        <p>Intenta con otros términos de búsqueda o verifica la ortografía.</p>
+      <div className={styles.emptyContainer}>
+        <Empty 
+          description={
+            <span>No se encontraron resultados para "{searchTerm}"</span>
+          }
+        />
       </div>
     );
   }
@@ -69,39 +72,32 @@ const SearchResults: React.FC<SearchResultsProps> = ({
   }
 
   return (
-    <div className="results-container">
-      <div className="results-header">
-        <h2>Resultados de la búsqueda</h2>
-        <p className="results-count">
-          {totalResults} resultado{totalResults !== 1 ? 's' : ''} encontrado{totalResults !== 1 ? 's' : ''}
-        </p>
+    <div className={styles.container}>
+      <div className={styles.resultsInfo}>
+        <Text type="secondary">
+          Mostrando {results.length} de {totalResults} resultados
+        </Text>
       </div>
 
-      <div className="results-list">
-        {results.map((result, index) => (
-          <Card key={`${result.documentName}-${index}`} className="result-card">
-            <div className="result-header">
-              <h3 className="document-name">{result.documentName}</h3>
-              {result.page && (
-                <span className="page-number">Página {result.page}</span>
-              )}
-              <div className="score-badge">
-                Relevancia: {Math.round(result.relevanceScore * 100)}%
-              </div>
-            </div>
-            <p className="result-text">
-              {highlightTerm(result.text, searchTerm)}
-            </p>
-          </Card>
-        ))}
-      </div>
+      <List
+        itemLayout="vertical"
+        dataSource={results}
+        renderItem={(result) => (
+          <List.Item style={{ padding: '16px 0' }}>
+            <SearchResultCard 
+              result={result} 
+              searchTerm={searchTerm} 
+            />
+          </List.Item>
+        )}
+      />
 
       {totalPages > 1 && (
-        <div className="pagination">
+        <div className={styles.pagination}>
           <button
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="pagination-button"
+            className={styles.paginationButton}
           >
             Anterior
           </button>
