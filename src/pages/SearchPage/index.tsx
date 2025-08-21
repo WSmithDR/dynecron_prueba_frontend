@@ -7,7 +7,6 @@ import {
   selectSearchError,
   selectSearchPagination
 } from '../../store/search/search.selectors';
-import type { SearchResult } from '../../store/search/search.types';
 import { FaSearch, FaSpinner, FaRegSadTear, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import Button from '../../components/common/Button';
@@ -16,7 +15,7 @@ import Card from '../../components/common/Card';
 
 const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const results = useAppSelector(selectSearchResults) as SearchResult[];
+  const results = useAppSelector(selectSearchResults) || [];
   const loading = useAppSelector(selectSearchLoading);
   const error = useAppSelector(selectSearchError) as string | null;
   const { currentPage, totalResults } = useAppSelector(selectSearchPagination) as { currentPage: number; totalResults: number };
@@ -147,7 +146,7 @@ const SearchPage: React.FC = () => {
           </div>
         )}
 
-        {hasSearched && loading !== 'pending' && results.length === 0 && (
+        {hasSearched && loading !== 'pending' && (!results || results.length === 0) && (
           <div className={styles.noResults}>
             <FaRegSadTear className={styles.noResultsIcon} />
             <h3>No se encontraron resultados</h3>
@@ -155,7 +154,7 @@ const SearchPage: React.FC = () => {
           </div>
         )}
 
-        {results.length > 0 && (
+        {results && results.length > 0 && (
           <div className={styles.resultsContainer}>
             <div className={styles.resultsHeader}>
               <h2>Resultados de la búsqueda</h2>

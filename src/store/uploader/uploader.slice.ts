@@ -20,12 +20,22 @@ const uploaderSlice = createSlice({
       })
       .addCase(uploadFilesAction.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        // Access the files array from the response
-        state.uploadedFiles = [...state.uploadedFiles, ...action.payload.files];
+        // Map the documents array to match the expected format
+        const uploadedFiles = action.payload.documents.map(doc => ({
+          name: doc.filename,
+          size: 0, // Size is not provided in the backend response
+          type: doc.filename.split('.').pop() || '' // Infer type from filename
+        }));
+        state.uploadedFiles = [...state.uploadedFiles, ...uploadedFiles];
       })
       .addCase(uploadFilesAction.rejected, (state, action) => {
         state.loading = 'failed';
-        state.error = action.payload as string;
+        state.error = action.payload as string || 'Error desconocido al subir archivos';
+        
+        // Log the error for debugging
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('Upload failed:', action.error);
+        }
       });
   },
 });

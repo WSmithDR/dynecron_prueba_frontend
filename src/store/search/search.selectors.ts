@@ -1,21 +1,33 @@
+import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '..';
 import type { SearchState } from './search.types';
 
 const selectSearchState = (state: RootState): SearchState => state.search;
 
-export const selectSearchQuery = (state: RootState) =>
-  selectSearchState(state).query;
+export const selectSearchQuery = createSelector(
+  [selectSearchState],
+  (search) => search.query
+);
 
-export const selectSearchResults = (state: RootState) =>
-  selectSearchState(state).results;
+export const selectSearchResults = createSelector(
+  [selectSearchState],
+  (search) => search.results
+);
 
-export const selectSearchLoading = (state: RootState) =>
-  selectSearchState(state).loading;
+export const selectSearchLoading = createSelector(
+  [selectSearchState],
+  (search) => search.loading
+);
 
-export const selectSearchError = (state: RootState) =>
-  selectSearchState(state).error;
+export const selectSearchError = createSelector(
+  [selectSearchState],
+  (search) => search.error
+);
 
-export const selectSearchPagination = (state: RootState) => {
-  const { currentPage, totalResults } = selectSearchState(state);
-  return { currentPage, totalResults };
-};
+export const selectSearchPagination = createSelector(
+  [selectSearchState],
+  (search) => ({
+    currentPage: search.currentPage,
+    totalResults: search.totalResults
+  })
+);

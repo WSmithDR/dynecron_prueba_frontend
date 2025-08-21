@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { uploadFiles } from '../../services/uploaderService';
-import type { UploadResponse } from '../../services/uploaderService';
+import type { UploadResponse } from './uploader.types';
 
 export const uploadFilesAction = createAsyncThunk<
   UploadResponse,  // Now expecting full UploadResponse
