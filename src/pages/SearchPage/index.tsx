@@ -19,7 +19,11 @@ const SearchPage: React.FC = () => {
   const { currentPage, totalResults } = useAppSelector(selectSearchPagination) as { currentPage: number; totalResults: number };
   const [localQuery, setLocalQuery] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
-
+  console.log("SearchPage - results", results);
+  console.log("SearchPage - loading", loading);
+  console.log("SearchPage - error", error);
+  console.log("SearchPage - currentPage", currentPage);
+  console.log("SearchPage - totalResults", totalResults);
   const resultsPerPage = 10;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
