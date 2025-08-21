@@ -1,13 +1,7 @@
 import React from 'react';
 import { FaRegSadTear } from 'react-icons/fa';
 import Card from '../common/Card';
-
-interface SearchResult {
-  document: string;
-  page?: number;
-  score: number;
-  text: string;
-}
+import type { SearchResult } from '../../store/search/search.types';
 
 interface SearchResultsProps {
   results: SearchResult[];
@@ -85,14 +79,14 @@ const SearchResults: React.FC<SearchResultsProps> = ({
 
       <div className="results-list">
         {results.map((result, index) => (
-          <Card key={`${result.document}-${index}`} className="result-card">
+          <Card key={`${result.documentName}-${index}`} className="result-card">
             <div className="result-header">
-              <h3 className="document-name">{result.document}</h3>
+              <h3 className="document-name">{result.documentName}</h3>
               {result.page && (
                 <span className="page-number">Página {result.page}</span>
               )}
               <div className="score-badge">
-                Relevancia: {Math.round(result.score * 100)}%
+                Relevancia: {Math.round(result.relevanceScore * 100)}%
               </div>
             </div>
             <p className="result-text">

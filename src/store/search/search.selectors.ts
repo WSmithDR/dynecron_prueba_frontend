@@ -28,6 +28,8 @@ export const selectSearchPagination = createSelector(
   [selectSearchState],
   (search) => ({
     currentPage: search.currentPage,
-    totalResults: search.totalResults
+    pageSize: search.pageSize,
+    totalResults: search.totalResults,
+    totalPages: search.totalPages,
   })
 );

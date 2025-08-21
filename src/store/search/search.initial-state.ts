@@ -5,6 +5,8 @@ export const initialState: SearchState = {
   results: [],
   currentPage: 1,
   totalResults: 0,
+  pageSize: 10,
+  totalPages: 0,
   loading: 'idle',
   error: null,
 };

@@ -1,16 +1,5 @@
 import { api } from './api';
-
-export interface SearchResult {
-  text: string;
-  document: string;
-  score: number;
-  page?: number;
-}
-
-export interface SearchResponse {
-  results: SearchResult[];
-  total: number;
-}
+import type { SearchResponse } from '../store/search/search.types';
 
 export const searchDocuments = async (
   query: string, 
@@ -25,11 +14,15 @@ export const searchDocuments = async (
         limit: pageSize 
       }
     });
+    
+    // Ensure the response matches our SearchResponse type
+    
+    console.log("searchDocuments", response.data);
     return response.data;
   } catch (error) {
     console.error('Error al buscar documentos:', error);
     // Retornar un objeto vacío en caso de error
-    return { results: [], total: 0 };
+    return { results: [], total: 0, page: 0, pageSize: 0, totalPages: 0 };
   }
 };
 
