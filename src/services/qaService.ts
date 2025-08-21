@@ -15,7 +15,7 @@ export interface AnswerResponse {
 export const askQuestion = async (question: string): Promise<AnswerResponse> => {
   try {
     const response = await api.post<AnswerResponse>('/ask', { question });
-    
+    console.log("AskQuestion", response.data);
     // Si no hay suficiente contexto, devolvemos una respuesta por defecto
     if (!response.data.hasEnoughContext) {
       return {

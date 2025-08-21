@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
-
-import { FaQuestionCircle, FaSpinner, FaArrowRight, FaQuoteLeft } from 'react-icons/fa';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import Card from '../../components/common/Card';
-import Button from '../../components/common/Button';
-import styles from './index.module.css';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { selectAnswer, selectCitations, selectQuestion, selectQALoading, selectQAError, setQuestion, askQuestionAction } from '../../store/qa';
+import { 
+  selectAnswer, 
+  selectCitations, 
+  selectQuestion, 
+  selectQALoading, 
+  selectQAError 
+} from '../../store/qa/qa.selectors';
+import { setQuestion } from '../../store/qa/qa.slice';
+import { askQuestionAction } from '../../store/qa/qa.actions';
+import {
+  QuestionForm,
+  AnswerDisplay,
+  LoadingIndicator,
+  ErrorDisplay,
+  NoResults
+} from '../../components/qa';
+import styles from './index.module.css';
 
 
 const QAPage: React.FC = () => {
@@ -55,37 +64,24 @@ const QAPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+
+
+  const handleQuestionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalQuestion(e.target.value);
+  }, []);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (localQuestion.trim()) {
       handleAskQuestion(localQuestion);
     }
-  };
+  }, [localQuestion]);
 
-  const handleExampleQuestion = (exampleQuestion: string) => {
+  const handleExampleQuestion = useCallback((exampleQuestion: string) => {
     setLocalQuestion(exampleQuestion);
-    // Don't submit automatically, let the user press enter or click the button
-  };
-
-  const renderCitation = (citation: any, index: number) => {
-    const citationNumber = index + 1;
-    const pageInfo = citation.page ? `, pág. ${citation.page}` : '';
-    
-    return (
-      <div key={index} className={styles.citation}>
-        <div className={styles.citationHeader}>
-          <span className={styles.citationNumber}>{citationNumber}</span>
-          <span className={styles.citationSource}>
-            {citation.document}{pageInfo}
-          </span>
-        </div>
-        <blockquote className={styles.citationText}>
-          <FaQuoteLeft className={styles.quoteIcon} />
-          {citation.text}
-        </blockquote>
-      </div>
-    );
-  };
+  }, []);
 
   return (
     <div className={styles.qaPage}>
@@ -95,127 +91,27 @@ const QAPage: React.FC = () => {
           Haz preguntas en lenguaje natural y obtén respuestas basadas en tus documentos
         </p>
 
-        <form onSubmit={handleSubmit} className={styles.questionForm}>
-          <div className={styles.questionInputContainer}>
-            <div className={styles.inputWrapper}>
-              <input
-                type="text"
-                value={localQuestion}
-                onChange={(e) => setLocalQuestion(e.target.value)}
-                placeholder="Escribe tu pregunta aquí..."
-                className={styles.questionInput}
-                disabled={loading === 'pending'}
-              />
-              <Button 
-                type="submit" 
-                variant="primary"
-                className={styles.askButton}
-                disabled={loading === 'pending' || !localQuestion.trim()}
-              >
-                {loading === 'pending' ? (
-                  <>
-                    <FaSpinner className={styles.spinner} />
-                    <span>Pensando...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Preguntar</span>
-                    <FaArrowRight />
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
+        <QuestionForm
+          question={localQuestion}
+          loading={loading === 'pending'}
+          onQuestionChange={handleQuestionChange}
+          onSubmit={handleSubmit}
+          onExampleClick={handleExampleQuestion}
+        />
 
-          <div className={styles.exampleQuestions}>
-            <p>Ejemplos de preguntas:</p>
-            <div className={styles.exampleButtons}>
-              <Button 
-                type="button" 
-                variant="outline" 
-                size="sm"
-                onClick={() => handleExampleQuestion("¿Cuál es el resumen del documento?")}
-              >
-                ¿Cuál es el resumen del documento?
-              </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
-                size="sm"
-                onClick={() => handleExampleQuestion("Menciona los puntos principales")}
-              >
-                Menciona los puntos principales
-              </Button>
-              <Button 
-                type="button" 
-                variant="outline" 
-                size="sm"
-                onClick={() => handleExampleQuestion("Explica el concepto clave")}
-              >
-                Explica el concepto clave
-              </Button>
-            </div>
-          </div>
-        </form>
-
-        {loading === 'pending' && (
-          <div className={styles.loadingContainer}>
-            <div className={styles.spinnerContainer}>
-              <FaSpinner className={styles.spinnerLarge} />
-            </div>
-            <p>Analizando tu pregunta...</p>
-          </div>
-        )}
-
-        {error && (
-          <div className={styles.errorContainer}>
-            <p className={styles.errorText}>{error}</p>
-          </div>
-        )}
-
+        {loading === 'pending' && <LoadingIndicator />}
+        
+        {error && <ErrorDisplay error={error} />}
+        
         {hasSearched && loading !== 'pending' && answer && (
-          <div className={styles.resultsContainer}>
-            <Card className={styles.answerCard}>
-              <div className={styles.answerHeader}>
-                <FaQuestionCircle className={styles.questionIcon} />
-                <h3>{question}</h3>
-              </div>
-              
-              <div className={styles.answerContent}>
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    a: ({node, ...props}) => (
-                      <a {...props} className={styles.markdownLink} target="_blank" rel="noopener noreferrer" />
-                    ),
-                    // Add more custom components as needed
-                  }}
-                >
-                  {answer}
-                </ReactMarkdown>
-              </div>
-            </Card>
-
-            {citations && citations.length > 0 && (
-              <div className={styles.citationsSection}>
-                <h3 className={styles.citationsTitle}>Fuentes y referencias</h3>
-                <div className={styles.citationsList}>
-                  {citations.map((citation, index) => renderCitation(citation, index))}
-                </div>
-              </div>
-            )}
-          </div>
+          <AnswerDisplay
+            question={question || ''}
+            answer={answer}
+            citations={citations || []}
+          />
         )}
-
-        {hasSearched && loading !== 'pending' && !answer && !error && (
-          <div className={styles.noResults}>
-            <div className={styles.noResultsIcon}>
-              <FaQuestionCircle />
-            </div>
-            <h3>No se pudo generar una respuesta</h3>
-            <p>Intenta reformular tu pregunta o verifica que hayas cargado documentos.</p>
-          </div>
-        )}
+        
+        {hasSearched && loading !== 'pending' && !answer && !error && <NoResults />}
       </div>
     </div>
   );
