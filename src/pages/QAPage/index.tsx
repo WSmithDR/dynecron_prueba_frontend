@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { 
   selectAnswer, 
   selectCitations, 
-  selectQuestion, 
   selectQALoading, 
   selectQAError 
 } from '../../store/qa/qa.selectors';
@@ -18,10 +17,8 @@ import {
 } from '../../components/qa';
 import styles from './index.module.css';
 
-
 const QAPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const question = useAppSelector(selectQuestion);
   const answer = useAppSelector(selectAnswer);
   const citations = useAppSelector(selectCitations);
   const loading = useAppSelector(selectQALoading);
@@ -29,40 +26,21 @@ const QAPage: React.FC = () => {
   const [localQuestion, setLocalQuestion] = useState('');
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Load question from URL on component mount
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const questionParam = params.get('q');
-    
-    if (questionParam) {
-      setLocalQuestion(questionParam);
-      dispatch(setQuestion(questionParam));
-      handleAskQuestion(questionParam);
-    }
-
-    return () => {
-      // Clean up if needed
-    };
-  }, [dispatch]);
-
-  const handleAskQuestion = async (questionText: string) => {
-    if (!questionText.trim()) {
-      return;
-    }
+  const handleAskQuestion = useCallback(async (questionText: string) => {
+    const trimmedQuestion = questionText.trim();
+    if (!trimmedQuestion) return;
 
     try {
-      await dispatch(askQuestionAction(questionText));
-      
-      // Update URL without page reload
-      const url = new URL(window.location.href);
-      url.searchParams.set('q', questionText);
-      window.history.pushState({}, '', url.toString());
-      
+      // Update global state
+      dispatch(setQuestion(trimmedQuestion));
+      console.log("handleAskQuestion", trimmedQuestion);
+      // Trigger API call
+      await dispatch(askQuestionAction(trimmedQuestion));
       setHasSearched(true);
     } catch (err) {
       console.error('Error asking question:', err);
     }
-  };
+  }, [dispatch]);
 
   const handleQuestionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalQuestion(e.target.value);
@@ -70,10 +48,8 @@ const QAPage: React.FC = () => {
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (localQuestion.trim()) {
-      handleAskQuestion(localQuestion);
-    }
-  }, [localQuestion]);
+    handleAskQuestion(localQuestion);
+  }, [localQuestion, handleAskQuestion]);
 
   const handleExampleQuestion = useCallback((exampleQuestion: string) => {
     setLocalQuestion(exampleQuestion);
@@ -101,7 +77,7 @@ const QAPage: React.FC = () => {
         
         {hasSearched && loading !== 'pending' && answer && (
           <AnswerDisplay
-            question={question || ''}
+            question={localQuestion}
             answer={answer}
             citations={citations || []}
           />
