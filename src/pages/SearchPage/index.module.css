@@ -2,79 +2,99 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 1rem 2rem;
+  padding: 2rem 1.5rem;
+  min-height: calc(100vh - 4rem);
 }
 
 .searchContainer {
-  background-color: white;
-  border-radius: 0.5rem;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 .searchPage h1 {
-  color: #1e40af;
+  color: var(--primary);
   text-align: center;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
+  margin: 0 0 0.75rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .subtitle {
-  color: #4b5563;
+  color: var(--text-secondary);
   text-align: center;
-  margin-bottom: 2rem;
+  margin: 0 auto 2.5rem;
   font-size: 1.1rem;
+  max-width: 700px;
+  line-height: 1.6;
 }
 
 .searchForm {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .searchInputContainer {
   display: flex;
   max-width: 700px;
   margin: 0 auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  border-radius: 0.75rem;
   overflow: hidden;
-  border: 1px solid #d1d5db;
-  transition: all 0.2s ease-in-out;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  background-color: var(--bg-secondary);
 }
 
 .searchInputContainer:focus-within {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px var(--primary-hover, rgba(59, 130, 246, 0.2));
+  border-color: var(--primary);
+  background-color: var(--bg-primary);
 }
 
 .searchInput {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1.25rem;
   border: none;
   font-size: 1rem;
   outline: none;
-  color: #111827;
+  color: var(--text-primary);
+  background-color: transparent;
+  font-family: inherit;
+  line-height: 1.5;
 }
 
 .searchInput::placeholder {
-  color: #9ca3af;
+  color: var(--text-tertiary);
+  opacity: 0.7;
 }
 
 .searchButton {
-  border-radius: 0 0.375rem 0.375rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0 1.5rem;
   white-space: nowrap;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.spinner {
-  animation: spin 1s linear infinite;
+.searchButton:hover {
+  background-color: var(--primary-hover);
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.searchButton:active {
+  transform: translateY(1px);
 }
 
 .loadingContainer {
@@ -83,62 +103,88 @@
 }
 
 .spinnerContainer {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .spinnerLarge {
-  font-size: 2.5rem;
-  color: #3b82f6;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--primary);
   animation: spin 1s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .errorContainer {
-  background-color: #fef2f2;
-  border-left: 4px solid #ef4444;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 0.25rem;
+  background-color: var(--error-bg);
+  border-left: 4px solid var(--error);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .errorText {
-  color: #b91c1c;
+  color: var(--error-text);
   margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.errorIcon {
+  color: var(--error);
+  font-size: 1.25rem;
+  flex-shrink: 0;
 }
 
 .noResults {
   text-align: center;
   padding: 3rem 1rem;
-  color: #4b5563;
+  color: var(--text-secondary);
 }
 
 .noResultsIcon {
   font-size: 3rem;
-  color: #9ca3af;
-  margin-bottom: 1rem;
+  color: var(--text-tertiary);
+  margin-bottom: 1.25rem;
+  opacity: 0.7;
 }
 
 .noResults h3 {
-  color: #1f2937;
-  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .resultsContainer {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .resultsHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
   flex-wrap: wrap;
   gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .resultsHeader h2 {
-  color: #1e40af;
+  color: var(--primary);
   margin: 0;
   font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .resultsCount {

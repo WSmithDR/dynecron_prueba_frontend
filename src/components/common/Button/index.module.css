@@ -88,13 +88,19 @@
 
 .button--outline {
   background-color: transparent;
-  border: 1px solid #d1d5db;
-  color: #1f2937;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
 }
 
 .button--outline:hover:not(:disabled) {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
+  background-color: var(--bg-tertiary);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.button--outline:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 /* Disabled state */
