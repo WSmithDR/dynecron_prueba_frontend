@@ -42,7 +42,7 @@ const QAPage: React.FC = () => {
     }
   }, [dispatch]);
 
-  const handleQuestionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuestionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setLocalQuestion(e.target.value);
   }, []);
 

@@ -1,12 +1,12 @@
-import React from 'react';
-import { FaArrowRight, FaSpinner } from 'react-icons/fa';
-import Button from '../../common/Button';
+import React, { useRef, useEffect } from 'react';
+import type { KeyboardEvent } from 'react';
+import { FaPaperPlane, FaSpinner } from 'react-icons/fa';
 import styles from './index.module.css';
 
 interface QuestionFormProps {
   question: string;
   loading: boolean;
-  onQuestionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onQuestionChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
   onExampleClick: (example: string) => void;
 }
@@ -14,7 +14,8 @@ interface QuestionFormProps {
 const exampleQuestions = [
   '¿Cuál es el resumen del documento?',
   'Menciona los puntos principales',
-  'Explica el concepto clave'
+  'Explica el concepto clave',
+  '¿Puedes darme más detalles?'
 ];
 
 const QuestionForm: React.FC<QuestionFormProps> = ({
@@ -24,53 +25,73 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
   onSubmit,
   onExampleClick
 }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Auto-resize textarea as user types
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+    }
+  }, [question]);
+
+  // Handle Shift+Enter for new line, Enter to submit
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (question.trim() && formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    }
+  };
+
   return (
-    <form onSubmit={onSubmit} className={styles.form}>
-      <div className={styles.inputContainer}>
-        <div className={styles.inputWrapper}>
-          <input
-            type="text"
+    <div className={styles.chatFormContainer}>
+      <div className={styles.examplesContainer}>
+        {exampleQuestions.map((example, index) => (
+          <button
+            key={index}
+            type="button"
+            className={styles.exampleButton}
+            onClick={() => onExampleClick(example)}
+            disabled={loading}
+          >
+            {example}
+          </button>
+        ))}
+      </div>
+      
+      <form ref={formRef} onSubmit={onSubmit} className={styles.chatForm}>
+        <div className={styles.textareaContainer}>
+          <textarea
+            ref={textareaRef}
             value={question}
             onChange={onQuestionChange}
-            placeholder="Escribe tu pregunta aquí..."
-            className={styles.input}
+            onKeyDown={handleKeyDown}
+            placeholder="Escribe tu pregunta..."
+            className={styles.chatInput}
             disabled={loading}
+            rows={1}
           />
-          <Button 
-            type="submit" 
-            variant="primary"
-            className={styles.button}
+          <button
+            type="submit"
+            className={styles.sendButton}
             disabled={loading || !question.trim()}
+            aria-label={loading ? 'Enviando...' : 'Enviar mensaje'}
           >
             {loading ? (
-              <>
-                <FaSpinner className={styles.spinner} />
-                <span>Pensando...</span>
-              </>
+              <FaSpinner className={styles.spinner} />
             ) : (
-              <>
-                <span>Preguntar</span>
-                <FaArrowRight style={{ marginLeft: '0.5rem' }} />
-              </>
+              <FaPaperPlane className={styles.sendIcon} />
             )}
-          </Button>
+          </button>
         </div>
-        
-        <div className={styles.exampleQuestions}>
-          {exampleQuestions.map((example, index) => (
-            <button
-              key={index}
-              type="button"
-              className={styles.exampleButton}
-              onClick={() => onExampleClick(example)}
-              disabled={loading}
-            >
-              {example}
-            </button>
-          ))}
+        <div className={styles.hintText}>
+          <span>Shift + Enter para nueva línea • Enter para enviar</span>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 
