@@ -2,8 +2,8 @@ import React from 'react';
 import { FaQuestionCircle } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Card from '../common/Card';
-import styles from '../../pages/QAPage/index.module.css';
+import Card from '../../common/Card';
+import styles from './index.module.css';
 
 interface AnswerCardProps {
   question: string;

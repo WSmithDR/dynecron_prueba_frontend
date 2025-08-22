@@ -11,7 +11,7 @@ const Header: React.FC = () => {
     return location.pathname === path ? styles.active : '';
   };
 
-  const { theme, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <header className={styles.header}>
@@ -44,18 +44,18 @@ const Header: React.FC = () => {
               </li>
             </ul>
           </nav>
-          <div 
-            className={styles.themeToggle} 
-            onClick={toggleTheme} 
-            title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-            aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+          <button 
+            className={styles.themeToggle}
+            onClick={toggleTheme}
+            title={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+            aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
           >
-            {theme === 'dark' ? (
-              <FiSun size={20} className={styles.themeIcon} />
+            {isDark ? (
+              <FiSun className={styles.themeIcon} />
             ) : (
-              <FiMoon size={20} className={styles.themeIcon} />
+              <FiMoon className={styles.themeIcon} />
             )}
-          </div>
+          </button>
         </div>
       </div>
     </header>

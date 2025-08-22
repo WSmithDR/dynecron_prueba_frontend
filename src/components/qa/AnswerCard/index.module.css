@@ -1,0 +1,92 @@
+.answerCard {
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  background-color: var(--card-bg);
+  transition: all 0.3s ease;
+}
+
+.answerHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.questionIcon {
+  color: var(--primary);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.answerHeader h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.answerContent {
+  padding: 1.5rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--card-bg);
+}
+
+.answerContent p {
+  margin-top: 0;
+  margin-bottom: 1em;
+  color: var(--text-secondary);
+}
+
+.answerContent p:last-child {
+  margin-bottom: 0;
+}
+
+.markdownLink {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.markdownLink:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Code blocks in markdown */
+.answerContent pre {
+  background-color: var(--code-bg);
+  border-radius: 0.375rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--border-color);
+}
+
+.answerContent code {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .answerHeader {
+    padding: 1rem;
+  }
+  
+  .answerContent {
+    padding: 1.25rem 1rem;
+  }
+  
+  .answerHeader h3 {
+    font-size: 1rem;
+  }
+}

@@ -1,10 +1,11 @@
 .footer {
-  background-color: var(--card-bg, #1f2937);
-  color: var(--text-color, #f9fafb);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 2rem 0;
   margin-top: auto;
   width: 100%;
-  border-top: 1px solid var(--border-color, #374151);
+  border-top: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -22,7 +23,9 @@
 
 .copyright {
   font-size: 0.875rem;
-  color: var(--text-muted, #9ca3af);
+  color: var(--text-tertiary);
+  margin: 0;
+  transition: color 0.3s ease;
 }
 
 .links {
@@ -31,14 +34,17 @@
 }
 
 .link {
-  color: var(--text-muted, #9ca3af);
+  color: var(--text-tertiary);
   text-decoration: none;
   font-size: 0.875rem;
-  transition: color 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0.9;
 }
 
 .link:hover {
-  color: var(--text-color, #ffffff);
+  color: var(--primary);
+  opacity: 1;
+  text-decoration: underline;
 }
 
 @media (max-width: 640px) {

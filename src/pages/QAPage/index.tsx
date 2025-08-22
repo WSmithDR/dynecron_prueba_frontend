@@ -57,8 +57,13 @@ const QAPage: React.FC = () => {
 
   return (
     <div className={styles.qaPage}>
+      <div className={styles.headerContainer}>
+        <div>
+          <h1>Pregunta a tu Documento</h1>
+          <p className={styles.subtitle}>Obtén respuestas rápidas de tus documentos</p>
+        </div>
+      </div>
       <div className={styles.qaContainer}>
-        <h1>Preguntas y Respuestas</h1>
         <p className={styles.subtitle}>
           Haz preguntas en lenguaje natural y obtén respuestas basadas en tus documentos
         </p>

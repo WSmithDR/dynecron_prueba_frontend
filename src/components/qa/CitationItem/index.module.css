@@ -1,16 +1,17 @@
 .citation {
   margin: 1rem 0;
   padding: 1.25rem;
-  background-color: #f8f9fa;
+  background-color: var(--bg-secondary);
   border-radius: 0.5rem;
-  border-left: 3px solid #3b82f6;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid var(--primary);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-color);
 }
 
 .citation:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-md);
 }
 
 .citationHeader {
@@ -26,7 +27,7 @@
   justify-content: center;
   width: 24px;
   height: 24px;
-  background-color: #3b82f6;
+  background-color: var(--primary);
   color: white;
   border-radius: 50%;
   margin-right: 0.75rem;
@@ -34,38 +35,43 @@
 }
 
 .citationSource {
-  color: #495057;
+  color: var(--text-secondary);
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .citationText {
   position: relative;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem 0.5rem 2rem;
-  color: #212529;
+  color: var(--text-primary);
   font-style: italic;
-  border-left: 2px solid #dee2e6;
+  border-left: 2px solid var(--border-color);
+  background-color: var(--card-bg);
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
 }
 
 .quoteIcon {
   position: absolute;
-  left: 0.25rem;
-  top: 0.25rem;
-  color: #adb5bd;
+  left: 0.5rem;
+  top: 0.75rem;
+  color: var(--text-tertiary);
   font-size: 1rem;
+  opacity: 0.8;
 }
 
 .citationMeta {
   margin-top: 0.75rem;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-tertiary);
   font-style: normal;
 }
 
 /* Error state */
 .citation.errorCon {
-  background-color: #f8fafc;
-  border-left: 3px solid #3b82f6;
+  background-color: var(--bg-tertiary);
+  border-left: 3px solid var(--primary);
   padding: 1.25rem;
   border-radius: 0.5rem;
   margin-bottom: 0;
@@ -75,4 +81,5 @@
   background-color: transparent;
   padding-left: 0;
   border-left: none;
+  color: var(--text-secondary);
 }
