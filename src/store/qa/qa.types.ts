@@ -4,25 +4,29 @@ type DocumentSourceType = 'pdf' | 'web' | 'text' | 'other'
 
 export interface AnswerCitation {
   /** The relevant text from the document (truncated if too long) */
-  text: string
+  content: string
   
   /** The title or name of the source document */
-  document: string
+  source: string
   
   /** The original source or file name of the document */
-  source?: string
+  documentName?: string
   
   /** The type of the source document */
-  source_type?: DocumentSourceType
+  sourceType?: DocumentSourceType
   
   /** Page number in the document, if applicable */
   page?: number
   
-  /** URL of the source document, if available */
-  url?: string
+  /** Relevancy score of the citation */
+  score?: number
   
-  /** When this document was processed/created */
-  timestamp?: string
+  /** Additional metadata */
+  metadata?: {
+    source?: string
+    document_id?: string
+    chunk_index?: number
+  }
 }
 
 export interface AskQuestionParams {

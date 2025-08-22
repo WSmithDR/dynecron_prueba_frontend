@@ -5,33 +5,36 @@ import remarkGfm from 'remark-gfm';
 import Card from '../common/Card';
 import styles from '../../pages/QAPage/index.module.css';
 
-interface Citation {
-  document: string;
-  page?: number;
-  text: string;
-}
+import type { AnswerCitation } from '../../store/qa/qa.types';
 
 interface AnswerDisplayProps {
   question: string;
   answer: string;
-  citations: Citation[];
+  citations: AnswerCitation[];
 }
 
-const CitationItem: React.FC<{ citation: Citation; index: number }> = ({ citation, index }) => {
+const CitationItem: React.FC<{ citation: AnswerCitation; index: number }> = ({ citation, index }) => {
   const pageInfo = citation.page ? `, pág. ${citation.page}` : '';
+  const scoreInfo = citation.score ? ` (${(citation.score * 100).toFixed(1)}% relevante)` : '';
+  const source = citation.documentName || citation.source;
   
   return (
     <div className={styles.citation}>
       <div className={styles.citationHeader}>
         <span className={styles.citationNumber}>{index + 1}</span>
         <span className={styles.citationSource}>
-          {citation.document}{pageInfo}
+          {source}{pageInfo}{scoreInfo}
         </span>
       </div>
       <blockquote className={styles.citationText}>
         <FaQuoteLeft className={styles.quoteIcon} />
-        {citation.text}
+        {citation.content}
       </blockquote>
+      {citation.metadata?.document_id && (
+        <div className={styles.citationMeta}>
+          <small>ID: {citation.metadata.document_id}</small>
+        </div>
+      )}
     </div>
   );
 };

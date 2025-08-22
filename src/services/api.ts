@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 
 // Configuración base de la API
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -7,23 +7,43 @@ if (!import.meta.env.VITE_API_BASE_URL) {
   console.warn('VITE_API_BASE_URL no está definido en las variables de entorno. Usando valor por defecto:', API_BASE_URL);
 }
 
-export const api = axios.create({
+// Configuración de axios
+const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
-  timeout: 10000, // 10 segundos de timeout
+  withCredentials: false,
+  timeout: 300000, // 5 minutos de timeout para respuestas largas
 });
 
-// Interceptor para manejar errores globalmente
+// Interceptor para las peticiones
+api.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    console.log(`[API] ${config.method?.toUpperCase()} ${config.url}`, config.params || '');
+    return config;
+  },
+  (error: unknown) => {
+    console.error('[API] Error en la petición:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Interceptor para las respuestas
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response) {
+  (response: AxiosResponse) => {
+    console.log(`[API] Respuesta recibida de ${response.config.url}:`, response.status);
+    return response;
+  },
+  (error: unknown) => {
+    const axiosError = error as AxiosError;
+    if (axiosError.response) {
       // El servidor respondió con un código de estado fuera del rango 2xx
-      const errorMessage = error.response.data?.message || 'Error en la solicitud';
+      const responseData = axiosError.response.data as { message?: string };
+      const errorMessage = responseData?.message || 'Error en la solicitud';
       return Promise.reject(new Error(errorMessage));
-    } else if (error.request) {
+    } else if ('request' in axiosError) {
       // La solicitud fue hecha pero no se recibió respuesta
       return Promise.reject(new Error('No se pudo conectar con el servidor'));
     } else {
@@ -44,5 +64,8 @@ export const uploadConfig = {
     console.log(`Progreso de carga: ${progress}%`);
   },
 };
+
+// Export the API instance
+export { api };
 
 export default api;
