@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaArrowRight, FaSpinner } from 'react-icons/fa';
-import Button from '../common/Button';
-import styles from '../../pages/QAPage/index.module.css';
+import Button from '../../common/Button';
+import styles from './index.module.css';
 
 interface QuestionFormProps {
   question: string;
@@ -25,21 +25,21 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
   onExampleClick
 }) => {
   return (
-    <form onSubmit={onSubmit} className={styles.questionForm}>
-      <div className={styles.questionInputContainer}>
+    <form onSubmit={onSubmit} className={styles.form}>
+      <div className={styles.inputContainer}>
         <div className={styles.inputWrapper}>
           <input
             type="text"
             value={question}
             onChange={onQuestionChange}
             placeholder="Escribe tu pregunta aquí..."
-            className={styles.questionInput}
+            className={styles.input}
             disabled={loading}
           />
           <Button 
             type="submit" 
             variant="primary"
-            className={styles.askButton}
+            className={styles.button}
             disabled={loading || !question.trim()}
           >
             {loading ? (
@@ -50,26 +50,23 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
             ) : (
               <>
                 <span>Preguntar</span>
-                <FaArrowRight />
+                <FaArrowRight style={{ marginLeft: '0.5rem' }} />
               </>
             )}
           </Button>
         </div>
-      </div>
-
-      <div className={styles.exampleQuestions}>
-        <p>Ejemplos de preguntas:</p>
-        <div className={styles.exampleButtons}>
+        
+        <div className={styles.exampleQuestions}>
           {exampleQuestions.map((example, index) => (
-            <Button 
+            <button
               key={index}
-              type="button" 
-              variant="outline" 
-              size="sm"
+              type="button"
+              className={styles.exampleButton}
               onClick={() => onExampleClick(example)}
+              disabled={loading}
             >
               {example}
-            </Button>
+            </button>
           ))}
         </div>
       </div>

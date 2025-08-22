@@ -42,10 +42,6 @@
   margin-top: 0;
 }
 
-.questionForm {
-  margin-bottom: 2rem;
-}
-
 .questionInputContainer {
   max-width: 800px;
   margin: 0 auto 1.5rem;
@@ -184,7 +180,6 @@
 .errorContainer {
   background-color: var(--error-bg);
   border-left: 4px solid var(--error);
-  /* Moved to ErrorDisplay component */
 }
 
 .citation {
@@ -283,7 +278,6 @@
   font-size: 1.05rem;
   max-width: 500px;
   margin: 0 auto;
-  line-height: 1.6;
 }
 
 @media (max-width: 640px) {
