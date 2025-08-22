@@ -1,0 +1,50 @@
+.fileListContainer {
+  margin-top: 1.5rem;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.fileListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fileListHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fileList {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar */
+.fileList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fileList::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+.fileList::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 3px;
+}
+
+.fileList::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
+}

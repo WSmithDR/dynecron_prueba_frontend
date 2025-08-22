@@ -1,0 +1,85 @@
+.fileItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.fileItem:last-child {
+  margin-bottom: 0;
+}
+
+.fileInfo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.fileIcon {
+  color: var(--text-muted);
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.fileDetails {
+  min-width: 0;
+}
+
+.fileName {
+  display: block;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileSize {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.fileActions {
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover:not(:disabled) {
+  color: var(--danger-color);
+  background-color: rgba(229, 62, 62, 0.1);
+}
+
+.removeButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.uploadedIndicator {
+  display: flex;
+  align-items: center;
+  color: var(--success-color);
+  font-size: 0.875rem;
+}
+
+.uploadedIcon {
+  margin-right: 0.25rem;
+}

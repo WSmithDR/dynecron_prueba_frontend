@@ -1,0 +1,53 @@
+.uploadCard {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background-color: var(--bg-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 250px;
+}
+
+.dropzone:hover,
+.dropzone.active {
+  border-color: var(--primary-color);
+  background-color: rgba(66, 153, 225, 0.05);
+}
+
+.uploadIcon {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.dropzone h3 {
+  margin: 0.5rem 0;
+  color: var(--text-primary);
+  font-size: 1.25rem;
+}
+
+.dropzone p {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.fileTypes {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
+}
+
+.active {
+  border-color: var(--primary-color);
+  background-color: rgba(66, 153, 225, 0.1);
+}
