@@ -37,22 +37,21 @@ const FileItem: React.FC<FileItemProps> = ({
         </div>
       </div>
       <div className={styles.fileActions}>
-        {isUploaded ? (
+        {isUploaded && (
           <div className={styles.uploadedIndicator}>
             <FiCheckCircle className={styles.uploadedIcon} />
             <span>Subido</span>
           </div>
-        ) : (
-          <button 
-            type="button" 
-            className={styles.removeButton}
-            onClick={onRemove}
-            disabled={disabled}
-            aria-label="Eliminar archivo"
-          >
-            <FiX />
-          </button>
         )}
+        <button 
+          type="button" 
+          className={`${styles.removeButton} ${isUploaded ? styles.uploadedRemoveButton : ''}`}
+          onClick={onRemove}
+          disabled={disabled}
+          title="Eliminar archivo"
+        >
+          <FiX />
+        </button>
       </div>
     </li>
   );

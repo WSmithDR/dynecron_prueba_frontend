@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../store';
 
@@ -7,42 +7,20 @@ import FileList from '../../components/FileList';
 import FileUploader from '../../components/FileUploader';
 import Button from '../../components/common/Button';
 import { uploadFilesAction } from '../../store/uploader/uploader.actions';
-import { selectUploadedFiles, selectUploaderLoading } from '../../store/uploader/uploader.selectors';
+import { selectUploaderLoading } from '../../store/uploader/uploader.selectors';
+import uploaderService, { type UploadedFile } from '../../services/uploaderService';
 import styles from './index.module.css';
 
 const UploadPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectUploaderLoading);
-  const uploadedFiles = useAppSelector(selectUploadedFiles);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [isDragActive, setIsDragActive] = useState(false);
+  const [serverFiles, setServerFiles] = useState<UploadedFile[]>([]);
+  const [isLoadingFiles, setIsLoadingFiles] = useState(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   
-  // Convert uploaded files to FileWithPreview[] for the FileList component
-  const uploadedFilesWithPreview = useMemo<FileWithPreview[]>(() => {
-    return uploadedFiles.map((file) => {
-      // Create a new object with the base File properties
-      const fileWithPreview = {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        lastModified: Date.now(),
-        // Add FileWithPreview specific properties
-        preview: '',
-        // Implement required File interface methods
-        webkitRelativePath: '',
-        arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
-        slice: (_start?: number, _end?: number, _contentType?: string) => new Blob(),
-        stream: () => new ReadableStream(),
-        text: () => Promise.resolve('')
-      } as unknown as FileWithPreview;
-
-      // Set the prototype to File to maintain instanceof checks
-      Object.setPrototypeOf(fileWithPreview, File.prototype);
-      
-      return fileWithPreview;
-    });
-  }, [uploadedFiles]);
+  // We'll use serverFiles for the uploaded files list instead of uploadedFiles
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setIsDragActive(false);
@@ -111,6 +89,25 @@ const UploadPage: React.FC = () => {
     }
   }, [files]);
 
+  // Load files from server
+  const loadServerFiles = useCallback(async () => {
+    try {
+      setIsLoadingFiles(true);
+      const files = await uploaderService.getUploadedFiles();
+      setServerFiles(files);
+    } catch (error) {
+      console.error('Error loading files:', error);
+      toast.error('Error al cargar los archivos del servidor');
+    } finally {
+      setIsLoadingFiles(false);
+    }
+  }, []);
+
+  // Load files on component mount
+  useEffect(() => {
+    loadServerFiles();
+  }, [loadServerFiles]);
+
   const handleUpload = useCallback(async () => {
     if (files.length === 0) {
       toast.error('No hay archivos para subir');
@@ -128,6 +125,10 @@ const UploadPage: React.FC = () => {
         }
       });
       
+      // Refresh the file list
+      const updatedFiles = await uploaderService.getUploadedFiles();
+      setServerFiles(updatedFiles);
+      
       setFiles([]);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
@@ -137,6 +138,35 @@ const UploadPage: React.FC = () => {
       toast.error(errorMessage);
     }
   }, [dispatch, files]);
+  
+  // Handle file deletion
+  const handleDeleteFile = useCallback(async (index: number) => {
+    const fileToDelete = serverFiles[index];
+    if (!fileToDelete) return;
+
+    try {
+      await uploaderService.deleteFile(fileToDelete.id);
+      toast.success(`Archivo "${fileToDelete.name}" eliminado correctamente`);
+      // Refresh the file list after deletion
+      await loadServerFiles();
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      toast.error(`Error al eliminar el archivo: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+    }
+  }, [serverFiles, loadServerFiles]);
+  
+  const handleDeleteAllFiles = useCallback(async () => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar todos los archivos? Esta acción no se puede deshacer.')) {
+      try {
+        await uploaderService.deleteAllFiles();
+        toast.success('Todos los archivos han sido eliminados');
+        setServerFiles([]);
+      } catch (error) {
+        console.error('Error deleting all files:', error);
+        toast.error('Error al eliminar los archivos');
+      }
+    }
+  }, []);
 
   const handleSelectFiles = () => {
     if (fileInputRef.current) {
@@ -177,16 +207,32 @@ const UploadPage: React.FC = () => {
         />
       )}
       
-      {uploadedFiles.length > 0 && (
+      {isLoadingFiles ? (
+        <div className={styles.loading}>Cargando archivos...</div>
+      ) : serverFiles.length > 0 ? (
         <FileList
-          files={uploadedFilesWithPreview}
+          files={serverFiles.map(file => ({
+            name: file.name,
+            size: file.size,
+            type: file.content_type,
+            lastModified: new Date(file.upload_date).getTime(),
+            preview: '',
+            // Add required File interface methods
+            webkitRelativePath: '',
+            arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
+            slice: (_start?: number, _end?: number, _contentType?: string) => new Blob(),
+            stream: () => new ReadableStream(),
+            text: () => Promise.resolve('')
+          } as unknown as FileWithPreview))}
           title="Archivos subidos"
-          onRemove={() => {}} // No se pueden eliminar archivos subidos desde aquí
-          onClearAll={() => {}} // No se pueden eliminar archivos subidos desde aquí
+          onRemove={handleDeleteFile}
+          onClearAll={handleDeleteAllFiles}
           showClearAll={true}
           disabled={loading === 'pending'}
           isUploadedList={true}
         />
+      ) : (
+        <div className={styles.noFiles}>No hay archivos subidos.</div>
       )}
       
      

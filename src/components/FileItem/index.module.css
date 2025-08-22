@@ -52,7 +52,7 @@
 
 .removeButton {
   background: none;
-  border: none;
+  border: 1px solid var(--border-color);
   color: var(--text-muted);
   cursor: pointer;
   padding: 0.25rem;
@@ -61,16 +61,26 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  width: 24px;
+  height: 24px;
 }
 
 .removeButton:hover:not(:disabled) {
   color: var(--danger-color);
   background-color: rgba(229, 62, 62, 0.1);
+  border-color: var(--danger-color);
 }
 
 .removeButton:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  border-color: transparent;
+}
+
+/* Style for remove button when file is uploaded */
+.uploadedRemoveButton {
+  border: 1px solid transparent;
+  margin-left: 0.5rem;
 }
 
 .uploadedIndicator {
