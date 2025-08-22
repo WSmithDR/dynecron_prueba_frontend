@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .dockerfile
+    container_name: dynecron_prueba_frontend
+    working_dir: /app
+    volumes:
+      - ../:/app
+    ports:
+      - "5173:5173"
+    networks:
+      - frontend_network
+      - shared_network
+
+networks:
+  frontend_network:
+    name: dynecron_frontend_network
+    external: false
+  shared_network:
+    name: dynecron_shared_network
+    external: true

@@ -1,0 +1,78 @@
+.citation {
+  margin: 1rem 0;
+  padding: 1.25rem;
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  border-left: 3px solid #3b82f6;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.citation:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.citationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.citationNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.citationSource {
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.citationText {
+  position: relative;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  color: #212529;
+  font-style: italic;
+  border-left: 2px solid #dee2e6;
+}
+
+.quoteIcon {
+  position: absolute;
+  left: 0.25rem;
+  top: 0.25rem;
+  color: #adb5bd;
+  font-size: 1rem;
+}
+
+.citationMeta {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: normal;
+}
+
+/* Error state */
+.citation.errorCon {
+  background-color: #f8fafc;
+  border-left: 3px solid #3b82f6;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+}
+
+.citation.errorCon .citationText {
+  background-color: transparent;
+  padding-left: 0;
+  border-left: none;
+}

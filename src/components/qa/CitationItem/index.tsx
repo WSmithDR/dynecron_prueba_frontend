@@ -1,8 +1,7 @@
 import React from 'react';
 import { FaQuoteLeft } from 'react-icons/fa';
-
-import styles from '../pages/QAPage/index.module.css';
-import type { AnswerCitation } from '../../store/qa/qa.types';
+import type { AnswerCitation } from '../../../store/qa/qa.types';
+import styles from './index.module.css';
 
 interface CitationItemProps {
   citation: AnswerCitation;
