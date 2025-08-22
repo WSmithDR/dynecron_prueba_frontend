@@ -1,9 +1,9 @@
 import React from 'react';
-import AnswerCard from './AnswerCard';
-import CitationItem from './CitationItem';
-import styles from '../../pages/QAPage/index.module.css';
+import AnswerCard from '../AnswerCard';
+import CitationItem from '../CitationItem';
+import styles from './index.module.css';
 
-import type { AnswerCitation } from '../../store/qa/qa.types';
+import type { AnswerCitation } from '../../../store/qa/qa.types';
 
 interface AnswerDisplayProps {
   question: string;
@@ -11,11 +11,9 @@ interface AnswerDisplayProps {
   citations: AnswerCitation[];
 }
 
-
-
 const AnswerDisplay: React.FC<AnswerDisplayProps> = ({ question, answer, citations }) => {
   return (
-    <div className={styles.resultsContainer}>
+    <div className={styles.container}>
       <AnswerCard question={question} answer={answer} />
 
       {citations && citations.length > 0 && (
