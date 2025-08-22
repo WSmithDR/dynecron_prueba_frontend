@@ -169,25 +169,28 @@
 }
 
 .highlight {
-  background-color: var(--highlight);
+  background-color: #FFEB3B; /* Bright yellow for highlights */
   padding: 0.1em 0.2em;
   border-radius: 0.2em;
   font-weight: 600;
-  color: var(--text-primary);
-  transition: background-color 0.2s ease;
+  color: #1a1a1a; /* Dark text for better contrast on yellow */
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme='dark'] .highlight {
-  background-color: var(--highlight-dark);
-  color: var(--text-primary);
+  background-color: #FFD700; /* Slightly darker yellow for dark mode */
+  color: #1a1a1a; /* Keep dark text for contrast */
 }
 
 .highlight:hover {
-  background-color: var(--primary-200);
+  background-color: #FFD700; /* Slightly darker yellow on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 [data-theme='dark'] .highlight:hover {
-  background-color: var(--primary-700);
+  background-color: #FFC107; /* Slightly brighter yellow on hover in dark mode */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 576px) {
