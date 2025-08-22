@@ -18,14 +18,7 @@ interface SearchResultsProps {
   onPageChange: (page: number) => void;
 }
 
-const highlightTerm = (text: string, term: string) => {
-  if (!term) return text;
-  
-  const regex = new RegExp(`(${term})`, 'gi');
-  return text.split(regex).map((part, i) => 
-    regex.test(part) ? <mark key={i}>{part}</mark> : part
-  );
-};
+
 
 export const SearchResults: React.FC<SearchResultsProps> = ({
   results,
@@ -74,9 +67,9 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
   return (
     <div className={styles.container}>
       <div className={styles.resultsInfo}>
-        <Text type="secondary">
-          Mostrando {results.length} de {totalResults} resultados
-        </Text>
+        <span className={styles.resultsCount}>
+          Mostrando <strong>{results.length}</strong> de <strong>{totalResults}</strong> resultados
+        </span>
       </div>
 
       <List

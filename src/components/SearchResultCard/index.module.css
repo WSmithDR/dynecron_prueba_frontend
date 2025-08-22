@@ -1,17 +1,39 @@
 .resultCard {
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
+  margin-bottom: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--border-color);
   background-color: var(--card-bg);
   overflow: hidden;
+  position: relative;
+  padding: 1.5rem;
+}
+
+.resultCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+  opacity: 0;
+  transform: scaleY(0.8);
+  transform-origin: top;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .resultCard:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: translateY(-2px);
-  border-color: var(--primary);
+  border-color: var(--primary-light);
+  background-color: var(--bg-secondary);
+}
+
+.resultCard:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 .resultHeader {
@@ -57,25 +79,86 @@
 }
 
 .scoreBadge {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  background: var(--success-bg);
-  border: 1px solid #b7eb8f;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem 0.25rem 1.5rem;
+  margin: 0;
+  font-family: inherit;
+  position: relative;
   border-radius: 4px;
-  padding: 4px 8px;
-  min-width: 80px;
+  transition: background-color 0.2s ease;
+}
+
+.scoreBadge:hover {
+  background-color: var(--bg-tertiary);
 }
 
 .scoreValue {
-  font-size: 16px;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--success);
+  color: var(--text-secondary);
+  line-height: 1;
+  position: relative;
 }
 
+/* Percentage symbol is now only in the JSX */
+
 .scoreLabel {
-  font-size: 12px;
+  font-size: 0.7rem;
   color: var(--text-tertiary);
+  font-weight: 500;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  font-style: italic;
+  opacity: 0.8;
+  margin-left: 0.25rem;
+}
+
+[data-theme='dark'] .scoreLabel {
+  color: var(--text-tertiary);
+  opacity: 0.7;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .scoreValue {
+  color: var(--text-secondary);
+  opacity: 0.9;
+}
+
+/* Add a subtle indicator for the score */
+.scoreBadge {
+  position: relative;
+}
+
+.scoreBadge::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 2px;
+  background-color: var(--success);
+  opacity: 0.2;
+  transition: opacity 0.2s ease;
+}
+
+[data-theme='dark'] .scoreBadge::before {
+  background-color: var(--primary);
+  opacity: 0.15;
+}
+
+/* Subtle hover effect */
+.scoreBadge:hover::before {
+  opacity: 0.3;
+}
+
+[data-theme='dark'] .scoreBadge:hover::before {
+  opacity: 0.25;
 }
 
 .resultText {
@@ -86,11 +169,25 @@
 }
 
 .highlight {
-  background-color: var(--warning-bg);
-  padding: 0 2px;
-  border-radius: 2px;
-  font-weight: 500;
-  color: var(--warning);
+  background-color: var(--highlight);
+  padding: 0.1em 0.2em;
+  border-radius: 0.2em;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease;
+}
+
+[data-theme='dark'] .highlight {
+  background-color: var(--highlight-dark);
+  color: var(--text-primary);
+}
+
+.highlight:hover {
+  background-color: var(--primary-200);
+}
+
+[data-theme='dark'] .highlight:hover {
+  background-color: var(--primary-700);
 }
 
 @media (max-width: 576px) {
