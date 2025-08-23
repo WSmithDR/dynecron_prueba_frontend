@@ -1,0 +1,31 @@
+.copyButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+.copyButton:hover {
+  background-color: var(--bg-hover);
+  color: var(--primary);
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+.copyButton svg {
+  font-size: 1.25em;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+}

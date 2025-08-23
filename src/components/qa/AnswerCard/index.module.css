@@ -10,11 +10,47 @@
 
 .answerHeader {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
   padding: 1.25rem 1.5rem;
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.copyButton:hover {
+  background-color: var(--bg-hover);
+  color: var(--primary);
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+.copyButton svg {
+  font-size: 1.25rem;
 }
 
 .questionIcon {
