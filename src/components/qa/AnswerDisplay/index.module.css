@@ -6,24 +6,32 @@
 }
 
 .citationsSection {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   padding: 1.5rem;
-  background-color: #f8f9fa;
+  background-color: var(--bg-secondary, #f8f9fa);
+  border: 1px solid var(--border-color, #e9ecef);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.citationsSection:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .citationsTitle {
   font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 1rem;
+  color: var(--text-primary, #333);
+  margin: 0 0 1.25rem 0;
   font-weight: 600;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color, #e9ecef);
 }
 
 .citationsList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 /* Responsive adjustments */
