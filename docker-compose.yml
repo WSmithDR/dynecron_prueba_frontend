@@ -1,22 +1,16 @@
 services:
-  app:
-    build:
-      context: ..
-      dockerfile: .dockerfile
-    container_name: dynecron_prueba_frontend
-    working_dir: /app
-    volumes:
-      - ../:/app
+  frontend:
+    build: .
+    container_name: dynecron_frontend
+    restart: unless-stopped
     ports:
       - "5173:5173"
+    env_file:
+      - .env
     networks:
-      - frontend_network
-      - shared_network
+      - dynecron_network
 
 networks:
-  frontend_network:
-    name: dynecron_frontend_network
-    external: false
-  shared_network:
-    name: dynecron_shared_network
+  dynecron_network:
     external: true
+    name: dynecron_network
